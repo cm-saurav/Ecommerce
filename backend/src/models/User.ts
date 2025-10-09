@@ -1,22 +1,28 @@
-import {DataTypes,Model, UUID,} from 'sequelize';
-import sequelize from '../commons/dbConfig.ts';
- 
+import sequelize from "../common/dbConfig.ts";
+import { DataTypes, Model, UUID, UUIDV4 } from "sequelize";
+import type { IUser } from "../interfaces/IUser.ts";
 
-class User extends Model{}
+
+
+
+export class User extends Model<IUser> implements IUser{
+    public id!: string;   // mandatory field
+    public name!: string;
+    public email!: string;
+    public phone!: string;
+    public isEmailVerified!: boolean;
+    public isPhoneVerified!: boolean;
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
+}
+
+
 User.init({
-    id:{type: DataTypes.UUID, defaultValue:DataTypes.UUIDV4, primaryKey:true},
-    email:{type: DataTypes.STRING, allowNull:true},
+    id:{type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey:true},
+    name:{type:DataTypes.STRING, allowNull:false},
+    email:{type: DataTypes.STRING, allowNull: false, unique: true},
     phone:{type:DataTypes.STRING, allowNull: false, unique: true},
-    isVerified:{type:DataTypes.BOOLEAN, defaultValue:false}
-
-
-},{sequelize,modelName:"user"});
-
-class OtpVerification extends Model{}
-OtpVerification.init({
-    id:{type:DataTypes.UUID, defaultValue:DataTypes.UUIDV4, primaryKey:true},
-    phone:{type:DataTypes.STRING, allowNull:false,unique:true},
-    otp:{type:DataTypes.STRING, allowNull:false}, // varchar is safer than int leading 0 also 
-    expiresAt:{type:DataTypes.DATE, allowNull:false}
-
-},{sequelize, modelName:""})
+    password:{type:DataTypes.STRING, allowNull:true},
+    isEmailVerified: {type: DataTypes.BOOLEAN, defaultValue: false},
+    isPhoneVerified: {type: DataTypes.BOOLEAN, defaultValue: false},
+},{sequelize,modelName:'User', tableName: 'users', timestamps:true})

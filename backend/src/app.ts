@@ -1,7 +1,27 @@
-// express app setup krna h 
-// isma middleware like express.json()
-//logging middleware yani all middleware 
-//global error handler 
+import express from 'express';
+import userRoute from './routes/userRoute.ts';
+// import notificationRoute from './routes/notificationRoute.ts';
+import { errorHandler } from './helpers/errorHandler.ts';
+import { config } from 'dotenv';
+config();
 
-// ye bs route and middleware k liya h 
 
+
+
+const app = express();
+app.use(express.json());
+
+
+
+
+
+// User Routes
+app.use('/api',userRoute);
+// app.use('/api/notification',notificationRoute)
+
+//error handler always come at last 
+ app.use(errorHandler);
+
+
+
+export default app;

@@ -7,4 +7,5 @@ router.post('/verifyOtp', UserController.verifyOtp);
 
 
 
+
 export default router;

@@ -33,7 +33,7 @@ export const dbMigrate = async()=>{
 
     } catch (error:any) {
         console.log(`error in dbMigrate ${error.message}`)
-         process.exit(1);
+         process.exit(1);ServiceWorkerRegistration
     }
    
 }

@@ -2,10 +2,17 @@ import express from 'express';
 import { CategoryController } from '../../controllers/admin/categoryController.ts';
 import { CategoryService } from '../../services/admin/categoryServices.ts';
 import { CategoryDao } from '../../daos/admin/categoryDao.ts';
+import { ProductController } from '../../controllers/admin/productController.ts';
+import { ProductService } from '../../services/admin/productServices.ts';
+import { ProductDao } from '../../daos/admin/productDao.ts';
+import { StateController } from '../../controllers/admin/stateController.ts';
+import { StateService } from '../../services/admin/stateServices.ts';
+import { StateDao } from '../../daos/admin/stateDao.ts';
 const router = express.Router();
 
 const controllerCategory = new CategoryController(new CategoryService(new CategoryDao));
-const controllerProduct = new CategoryController(new CategoryService(new CategoryDao));
+const controllerProduct = new ProductController(new ProductService(new ProductDao));
+const controllerState = new StateController(new StateService(new StateDao));
 
 
 
@@ -18,9 +25,15 @@ router.delete('/category/:id', controllerCategory.deleteById.bind(controllerCate
 
 /////////////////////////////////////// Products routes
 
-router.post('product/create', controllerProduct.create.bind(controllerProduct));
+router.post('/product/create', controllerProduct.create.bind(controllerProduct));
+router.get('/product', controllerProduct.getAll.bind(controllerProduct));
+router.get('/product/:id', controllerProduct.getById.bind(controllerProduct));
+router.patch('/product/:id', controllerProduct.updateById.bind(controllerProduct));
+router.delete('/product/:id', controllerProduct.deleteById.bind(controllerProduct));
 
+///////////////////////////////////// state routes
 
+router.post('/state/create', controllerState.create.bind(controllerState));
 
 
 

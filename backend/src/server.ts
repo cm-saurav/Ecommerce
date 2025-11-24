@@ -1,7 +1,7 @@
 import { dbConnection,dbMigrate } from './common/dbConfig.ts';
 import app from './app.ts';
-import { User } from './models/User.ts';
 // import { Otp } from './models/Otp.ts';
+import { setupAssociations } from './utils/associate.ts';
 
 
 const port = process.env.PORT;
@@ -21,6 +21,7 @@ const startServer = async () => {
    try {
       app.listen(port, async () => {
          await dbConnection();
+          setupAssociations()
          await dbMigrate(); // every time migration run 
          console.log(`server is listning at port ${port}`)
       })

@@ -1,27 +1,21 @@
-// src/models/admin/categoryModel.ts
-
-import  { Model, DataTypes } from "sequelize";
+import { Model, DataTypes,  } from "sequelize";
 import type { Optional } from "sequelize";
 import sequelize from "../../common/dbConfig.js";
-import type { ICategory } from "../../interfaces/admin/ICategory.js";
-import { CategoryStatus } from "../../interfaces/admin/ICategory.js";
+import  {  StateStatus } from "../../interfaces/admin/IState.js";
+import type { IState } from "../../interfaces/admin/IState.js";
 
-export interface CategoryCreationAttributes extends Optional<ICategory, "id" | "slug" | "status"> {}
+export interface StateCreationAttr extends Optional<IState, "id" | "status"> {}
 
-export class CategoryModel
-    extends Model<ICategory, CategoryCreationAttributes>
-{
+export class StateModel extends Model<IState, StateCreationAttr> implements IState {
     declare id: string;
     declare name: string;
-    declare slug: string;
-    declare status: CategoryStatus;
-    declare description: string | null;
+    declare code: string;
+    declare status: StateStatus;
     declare readonly created_at: Date;
     declare readonly updated_at: Date;
 }
 
-
-CategoryModel.init(
+StateModel.init(
     {
         id: {
             type: DataTypes.UUID,
@@ -31,20 +25,17 @@ CategoryModel.init(
         name: {
             type: DataTypes.STRING(255),
             allowNull: false,
+            unique:true
         },
-        slug: {
-            type: DataTypes.STRING(255),
+        code: {
+            type: DataTypes.STRING(10),
             allowNull: false,
             unique: true,
         },
         status: {
-            type: DataTypes.ENUM(...Object.values(CategoryStatus)),
+            type: DataTypes.ENUM(...Object.values(StateStatus)),
             allowNull: false,
-            defaultValue: CategoryStatus.ACTIVE,
-        },
-        description: {
-            type: DataTypes.TEXT,
-            allowNull: true,
+            defaultValue: StateStatus.ACTIVE,
         },
         created_at: {
             type: DataTypes.DATE,
@@ -53,13 +44,13 @@ CategoryModel.init(
         updated_at: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
-        }
+        },
     },
     {
         sequelize,
-        tableName: "categories",
+        tableName: "states",
         timestamps: true,
         createdAt: "created_at",
-        updatedAt: "updated_at"
+        updatedAt: "updated_at",
     }
 );

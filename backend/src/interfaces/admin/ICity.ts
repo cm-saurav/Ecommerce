@@ -7,9 +7,10 @@ export enum CityStatus {
 
 export interface ICity {
   id?: string;
-  state_id?: string;
-  name?: string;
-  status?: CityStatus;
+  state_id: string; // it shoulb not be optional 
+  name: string;
+  status: CityStatus;
+  city_code: string;
   created_at?: Date;
   updated_at?: Date;
 }

@@ -8,11 +8,17 @@ import { ProductDao } from '../../daos/admin/productDao.ts';
 import { StateController } from '../../controllers/admin/stateController.ts';
 import { StateService } from '../../services/admin/stateServices.ts';
 import { StateDao } from '../../daos/admin/stateDao.ts';
+import { CityController } from '../../controllers/admin/cityController.ts';
+import { CityService } from '../../services/admin/cityServices.ts';
+import { CityDao } from '../../daos/admin/cityDao.ts';
 const router = express.Router();
 
 const controllerCategory = new CategoryController(new CategoryService(new CategoryDao));
 const controllerProduct = new ProductController(new ProductService(new ProductDao));
 const controllerState = new StateController(new StateService(new StateDao));
+const controllerCity = new CityController(
+  new CityService(new CityDao(), new StateDao())
+);
 
 
 
@@ -40,6 +46,11 @@ router.get('/state/:id', controllerState.getById.bind(controllerState));
 router.delete("/state/delete/:id", controllerState.softDelete.bind(controllerState));
 
 //////////////////////////////////   city routes
+
+router.post('/city/create', controllerCity.create.bind(controllerCity));
+router.get('/city/city-list', controllerCity.getAll.bind(controllerCity));
+router.get('/city/:id', controllerCity.getById.bind(controllerCity));
+
 
 
 

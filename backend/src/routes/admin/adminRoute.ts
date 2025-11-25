@@ -34,6 +34,14 @@ router.delete('/product/:id', controllerProduct.deleteById.bind(controllerProduc
 ///////////////////////////////////// state routes
 
 router.post('/state/create', controllerState.create.bind(controllerState));
+router.get('/state/state-list', controllerState.getAll.bind(controllerState));
+router.patch('/state/update/:id', controllerState.update.bind(controllerState));
+router.get('/state/:id', controllerState.getById.bind(controllerState));
+router.delete("/state/delete/:id", controllerState.softDelete.bind(controllerState));
+
+//////////////////////////////////   city routes
+
+
 
 
 

@@ -19,3 +19,5 @@ export const errorHandler = (err: any, req: Request, res: Response, next: NextFu
         message: "Internal Server Error from Backend side",
     });
 };
+
+

@@ -5,8 +5,8 @@ export enum PincodeStatus {
 
 export interface IPincode {
   id?: string;
-  city_id?: string;
-  pincode?: string;
+  city_id: string;
+  pincode: string;
   area_name?: string;
   delivery_available?: boolean;
   status?: PincodeStatus;

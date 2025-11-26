@@ -47,4 +47,34 @@ export class CityController {
       next(error);
     }
   }
+
+  async update(req: Request, res: Response, next: NextFunction) {
+  try {
+    const id = req.params.id as string;
+    const payload = req.body; // name, state_id, status, city_code
+
+    if (payload.name) payload.name = payload.name.trim().toLowerCase();
+    if (payload.city_code) payload.city_code = payload.city_code.trim().toUpperCase();
+
+    const city = await this.service.update(id, payload);
+
+    return sendApiResponse(res, 200, city, "City updated successfully");
+  } catch (error) {
+    next(error);
+  }
+}
+
+async softDelete(req: Request, res: Response, next: NextFunction) {
+  try {
+    const id = req.params.id as string;
+
+    const result = await this.service.softDelete(id);
+
+    return sendApiResponse(res, 200, result, "City soft-deleted (inactivated) successfully");
+  } catch (error) {
+    next(error);
+  }
+}
+
+
 }

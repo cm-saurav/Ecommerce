@@ -11,6 +11,9 @@ import { StateDao } from '../../daos/admin/stateDao.ts';
 import { CityController } from '../../controllers/admin/cityController.ts';
 import { CityService } from '../../services/admin/cityServices.ts';
 import { CityDao } from '../../daos/admin/cityDao.ts';
+import { PincodeController } from '../../controllers/admin/pincodeController.ts';
+import { PincodeService } from '../../services/admin/pincodeServices.ts';
+import { PincodeDao } from '../../daos/admin/pincodeDao.ts';
 const router = express.Router();
 
 const controllerCategory = new CategoryController(new CategoryService(new CategoryDao));
@@ -19,7 +22,7 @@ const controllerState = new StateController(new StateService(new StateDao));
 const controllerCity = new CityController(
   new CityService(new CityDao(), new StateDao())
 );
-
+const controllerPincode = new PincodeController(new PincodeService(new PincodeDao(),new CityDao()));
 
 
 ///////////////////////////////////////// Category routes
@@ -50,6 +53,18 @@ router.delete("/state/delete/:id", controllerState.softDelete.bind(controllerSta
 router.post('/city/create', controllerCity.create.bind(controllerCity));
 router.get('/city/city-list', controllerCity.getAll.bind(controllerCity));
 router.get('/city/:id', controllerCity.getById.bind(controllerCity));
+router.patch('/city/update/:id', controllerCity.update.bind(controllerCity));
+router.delete('/city/delete/:id', controllerCity.softDelete.bind(controllerCity));
+
+//////////////////////////////////// pincode routes
+
+router.post('/pincode/create', controllerPincode.create.bind(controllerPincode));
+router.get('/pincode/list', controllerPincode.getAll.bind(controllerPincode));
+router.get('/pincode/:id', controllerPincode.getById.bind(controllerPincode));
+router.patch('/pincode/:id', controllerPincode.update.bind(controllerPincode));
+router.delete("/pincode/delete/:id", controllerPincode.softDelete.bind(controllerPincode));
+
+
 
 
 

@@ -29,7 +29,7 @@ PincodeModel.init(
             allowNull: false,
         },
         pincode: {
-            type: DataTypes.STRING(10),
+            type: DataTypes.STRING(6),
             allowNull: false,
         },
         area_name: {
@@ -61,5 +61,13 @@ PincodeModel.init(
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-    }
+        indexes: [
+  {
+    unique: true,
+    fields: ["city_id", "pincode"]  // prevent duplicate pincode in same city
+  }
+]
+
+    },
+    
 );

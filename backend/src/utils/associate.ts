@@ -39,4 +39,27 @@ export const setupAssociations = () => {
         foreignKey: "city_id",
         as: "city",
     });
+
+//     ProductModel.hasOne(InventoryModel, { // har product ka single inventory record hota hai.
+//   foreignKey: "product_id",
+//   as: "inventory",
+//   onDelete: "CASCADE"
+// });
+
+// InventoryModel.belongsTo(ProductModel, {
+//   foreignKey: "product_id",
+//   as: "product"
+// });
+
+// AdminModel.hasMany(InventoryModel, {
+//   foreignKey: "created_by",
+//   as: "createdInventory"
+// });
+
+// InventoryModel.belongsTo(AdminModel, {
+//   foreignKey: "created_by",
+//   as: "creator"
+// });
+
+
 };

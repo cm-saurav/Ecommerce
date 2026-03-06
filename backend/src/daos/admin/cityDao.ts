@@ -1,5 +1,5 @@
 import { CityModel } from "../../models/admin/cityModel.js";
-import type { ICity } from "../../interfaces/admin/ICity.js";
+import { CityStatus, type ICity } from "../../interfaces/admin/ICity.js";
 import { StateModel } from "../../models/admin/stateModel.ts";
 
 export class CityDao {
@@ -56,6 +56,7 @@ export class CityDao {
         "name",
         "city_code",
         "state_id",
+        "status",
         "created_at"
       ]
     });
@@ -65,5 +66,28 @@ export class CityDao {
     throw error;
   }
 }
+
+async update(id: string, payload: Partial<ICity>) {
+  try {
+    await CityModel.update(payload, { where: { id } });
+    return this.getById(id);
+  } catch (error) {
+    throw error;
+  }
+}
+
+async softDelete(id: string) {
+  try {
+    await CityModel.update(
+      { status: CityStatus.INACTIVE },
+      { where: { id } }
+    );
+    return this.getById(id); // return updated record
+  } catch (error) {
+    throw error;
+  }
+}
+
+
 
 }

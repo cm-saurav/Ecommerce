@@ -1,16 +1,15 @@
-export enum ProductStatus{
-    ACTIVE= "active",
-    INACTIVE= "inactive"
-
+export enum ProductStatus {
+    ACTIVE = "ACTIVE",
+    INACTIVE = "INACTIVE"
 }
 
 export interface IProduct {
     id?: string;
     category_id?: string;
     name?: string;
-    mrp_price?: number;
-    sale_price?: number;
-    discount_percentage?: number;
+    mrp_price?: number | undefined | null;
+    sale_price?: number | undefined | null;
+    discount_percentage?: number | undefined | null;
     description?: string;
     image?: string;
     sku?: string;
